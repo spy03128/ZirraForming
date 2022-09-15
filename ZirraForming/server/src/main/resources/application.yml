@@ -1,11 +1,12 @@
 spring:
-  profiles.active: local
+  profiles:
+    active: local
   # 데이터 소스 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/zirraforming?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
+    url: jdbc:mysql://localhost:3307/zirraforming?serverTimezone=Asia/Seoul
+    username: root
+    password: admin1234
     hikari:
       pool-name: jpa-hikari-pool
       maximum-pool-size: 5
@@ -19,13 +20,13 @@ spring:
   # Redis 설정
   redis:
     host: localhost
-    port: 6379
+    port: 6380
 
   # JPA 설정
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
