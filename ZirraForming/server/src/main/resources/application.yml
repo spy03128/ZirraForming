@@ -54,8 +54,8 @@ spring:
           scope:
             - email
         naver:
-          clientId: '{네이버 client-id}'
-          clientSecret: '{네이버 client-secret}'
+          clientId: 96QOhaKKftnlMuxEBRGT
+          clientSecret: YPlSdz6TVv
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
@@ -63,8 +63,8 @@ spring:
             - email
           clientName: Naver
         kakao:
-          clientId: '{카카오 client-id}'
-          clientSecret: '{카카오 client-secret}'
+          clientId: f5c3e22bfb7f34929bb5b6a4f5d3f318
+          clientSecret: Qsmqx8sM5oe1ygclWuNgY8NNv8A5OmX8
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
@@ -103,3 +103,10 @@ app:
   oauth2:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/redirect
+
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+    com.ssafy.server: debug
