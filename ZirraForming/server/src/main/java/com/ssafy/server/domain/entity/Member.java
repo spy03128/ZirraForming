@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "member")
-public class Member {
+@Table(name = "members")
+public class Member extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,8 @@ public class Member {
     @JoinColumn(name = "character_type_id")
     private CharacterType characterType;
 
-    @Embedded
-    private DateTime dateTime;
+    public Member(String email, String nickname) {
+        this.email = email;
+        this.nickname = nickname;
+    }
 }
