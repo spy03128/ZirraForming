@@ -40,13 +40,11 @@ spring:
           clientSecret: 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
           scope:
             - email
-            - profile
         facebook:
           clientId: '{페이스북 client-id}'
           clientSecret: '{페이스북 client-secret}'
           scope:
             - email
-            - public_profile
         naver:
           clientId: '{네이버 client-id}'
           clientSecret: '{네이버 client-secret}'
@@ -65,8 +63,6 @@ spring:
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
           scope:
-            - profile_nickname
-            - profile_image
             - account_email
           clientName: Kakao
       # Provider 설정
