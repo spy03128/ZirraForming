@@ -1,12 +1,14 @@
 package com.ssafy.server.domain.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "members")
+@NoArgsConstructor
 public class Member extends BaseTimeEntity{
 
     @Id
