@@ -1,7 +1,7 @@
 package com.ssafy.server.oauth.service;
 
 import com.ssafy.server.domain.entity.Member;
-import com.ssafy.server.domain.repository.MemberRepo;
+import com.ssafy.server.domain.repository.MemberRepository;
 import com.ssafy.server.oauth.entity.ProviderType;
 import com.ssafy.server.oauth.entity.UserPrincipal;
 import com.ssafy.server.oauth.info.OAuth2UserInfo;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final MemberRepo memberRepo;
+    private final MemberRepository memberRepo;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

@@ -2,8 +2,7 @@ package com.ssafy.server.config;
 
 import com.ssafy.server.config.properties.AppProperties;
 import com.ssafy.server.config.properties.CorsProperties;
-import com.ssafy.server.domain.repository.MemberRepo;
-import com.ssafy.server.oauth.entity.RoleType;
+import com.ssafy.server.domain.repository.MemberRepository;
 import com.ssafy.server.oauth.exception.RestAuthenticationEntryPoint;
 import com.ssafy.server.oauth.filter.TokenAuthenticationFilter;
 import com.ssafy.server.oauth.handler.OAuth2AuthenticationFailureHandler;
@@ -37,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthTokenProvider tokenProvider;
     private final CustomOAuth2UserService oAuth2UserService;
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
-    private final MemberRepo memberRepo;
+    private final MemberRepository memberRepo;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

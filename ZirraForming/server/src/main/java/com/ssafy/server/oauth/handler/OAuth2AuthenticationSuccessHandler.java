@@ -2,16 +2,16 @@ package com.ssafy.server.oauth.handler;
 
 
 import com.ssafy.server.config.properties.AppProperties;
-import com.ssafy.server.domain.repository.MemberRepo;
-import com.ssafy.server.oauth.entity.ProviderType;
+import com.ssafy.server.domain.repository.MemberRepository;
 import com.ssafy.server.oauth.entity.RoleType;
-import com.ssafy.server.oauth.info.OAuth2UserInfo;
-import com.ssafy.server.oauth.info.OAuth2UserInfoFactory;
 import com.ssafy.server.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.ssafy.server.oauth.token.AuthToken;
 import com.ssafy.server.oauth.token.AuthTokenProvider;
 import com.ssafy.server.oauth.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -41,8 +41,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final AuthTokenProvider tokenProvider;
     private final AppProperties appProperties;
     private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
-
-    private final MemberRepo memberRepo;
+    private final MemberRepository memberRepo;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -94,6 +95,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 new Date(now.getTime() + appProperties.getAuth().getRefreshTokenExpiry())
         );
 
+        // refresh db 저장
+        SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+        String key = String.valueOf(memberId);
+        if(setOperations.size(key)!=0) setOperations.pop(key);
+        setOperations.add(key, refreshToken.getToken());
+
         // 쿠키
         int cookieMaxAge = (int) appProperties.getAuth().getRefreshTokenExpiry() / 60;
         CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
@@ -101,7 +108,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("accessToken", accessToken.getToken())
-                .queryParam("refreshToken", refreshToken.getToken())
                 .build().toUriString();
     }
 
