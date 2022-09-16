@@ -1,9 +1,9 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
 import { Stars, PerspectiveCamera, ScrollControls } from "@react-three/drei";
 import styled from "styled-components";
 
-import Earth from "../components/three/earth";
+import Earth from "../components/three/Earth";
+import { Suspense } from "react";
 
 const CanvasWrap = styled.div`
   width: 100vw;
@@ -19,7 +19,7 @@ function Main() {
   return (
     <CanvasWrap>
       <Canvas
-        gl={{ antialias: true }}
+        gl={{ antialias: false }}
         style={{
           width: "100vw",
           height: "100vh",
@@ -27,15 +27,8 @@ function Main() {
           // backgroundColor: "black",
         }}
       >
-        <ScrollControls pages={5}>
+        <ScrollControls pages={4}>
           <Earth />
-          <PerspectiveCamera
-            position={[0, 1, 5]}
-            aspect={window.innerWidth / window.innerHeight}
-            fov={100}
-            near={0.1}
-            far={1000}
-          />
           <ambientLight intensity={1} color="white" />
         </ScrollControls>
       </Canvas>

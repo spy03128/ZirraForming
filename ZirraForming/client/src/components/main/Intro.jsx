@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BasicButton } from "../../items/Button";
 
 import MouseSVG from "../../assets/svgs/whitemouse.svg";
+import { Html } from "@react-three/drei";
 
 const Wrapper = styled(motion.div)`
   position: fixed;
@@ -34,7 +35,7 @@ const TitleWrap = styled(motion.div)`
   padding: 40px 30px 5px;
 
   .title__top {
-    font-size: min(5vw, 50px);
+    font-size: min(3vw, 30px);
     color: #fbc531;
     text-align: center;
     align-self: end;
@@ -44,8 +45,8 @@ const TitleWrap = styled(motion.div)`
     align-self: start;
     color: #3c9f58;
     text-align: center;
-    line-height: min(19vw, 150px);
-    font-size: min(19vw, 150px);
+    line-height: min(15vw, 130px);
+    font-size: min(15vw, 130px);
   }
 `;
 

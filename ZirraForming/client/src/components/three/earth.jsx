@@ -18,6 +18,7 @@ import { TextureLoader } from "three";
 import dat from "dat.gui";
 import Intro from "../main/Intro";
 import gsap from "gsap";
+import Summary from "../main/Summary";
 
 const gui = new dat.GUI();
 
@@ -33,14 +34,14 @@ function Earth(props) {
   const [secondAni, setSecondAni] = useState(false);
 
   // HTML 조작
-  const [SummaryPage, setSummaryPage] = useState(false);
+  const [summaryPage, setSummaryPage] = useState(false);
 
   const earth = useRef(); // 지구객체
   const pCamera = useRef(); // Perspective 카메라 객체
   const oCamera = useRef(); // Orthographic 카메라 객체
 
   const scroll = useScroll();
-  console.log(scroll);
+
   useEffect(() => {
     console.log(earth.current.scale);
   }, [earth]);
@@ -111,18 +112,19 @@ function Earth(props) {
     // 1번째 페이지 무빙
     if (scroll.scroll.current === 0) {
       setFirstAni(true);
+      setSecondAni(false);
     }
 
     if (Math.floor(scroll.scroll.current * 10) === 2) {
-      setFirstAni(false);
       setSecondAni(true);
+      setFirstAni(false);
     }
 
     // 애니메이션
     if (firstAni) {
       gsap
         .to(earth.current.position, {
-          y: -700,
+          y: -650,
         })
         .duration(3);
       gsap
@@ -133,21 +135,23 @@ function Earth(props) {
         })
         .duration(3);
     }
-
+    // 두번째 애니메이션
     if (secondAni) {
       gsap
         .to(earth.current.position, {
           y: 125,
         })
-        .duration(3);
+        .duration(2);
 
       gsap
         .to(earth.current.scale, {
-          x: 280,
-          y: 280,
-          z: 280,
+          x: 200,
+          y: 200,
+          z: 200,
         })
-        .duration(3);
+        .duration(2);
+
+      setSummaryPage(true);
     }
   });
 
@@ -214,8 +218,11 @@ function Earth(props) {
           />
         </mesh>
       </group>
+      <Summary />
 
-      <Scroll html>{firstAni ? <Intro /> : null}</Scroll>
+      <Scroll html>
+        <Intro />
+      </Scroll>
     </>
   );
 }
