@@ -17,8 +17,8 @@ services:
     command: [ '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
     expose:
       - 3307
-    networks:
-      - backend-network
+    # networks:
+    #   - backend-network
 
   redis:
     container_name: "redis"
@@ -28,8 +28,8 @@ services:
       - 6380:6379
     expose:
       - 6380
-    networks:
-      - backend-network
+    # networks:
+    #   - backend-network
   
   mongodb:          
     container_name: "mongodb"
@@ -44,8 +44,8 @@ services:
       - "27018:27017"
     expose:
       - 27017
-    networks:
-      - frontend-network
+    # networks:
+    #   - frontend-network
 
   springbootapp:
     container_name: "springbootapp"
@@ -60,9 +60,15 @@ services:
       - mysql
       - redis
       - mongodb
-    networks:
-      - frontend-network
-      - backend-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/zirraforming?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin1234
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6380
+    # networks:
+    #   - frontend-network
+    #   - backend-network
   
   react:
     container_name: "react"
@@ -72,14 +78,14 @@ services:
     ports:
       - 3000:3000
     stdin_open: true
-    networks:
-      - frontend-network
+    # networks:
+    #   - frontend-network
 
-volumes:
-  mysql_volume: {}
-  mongodb_volume: {}
-  springboot_volume: {}
+# volumes:
+#   mysql_volume: {}
+#   mongodb_volume: {}
+#   springboot_volume: {}
 
-networks:
-  backend-network:
-  frontend-network:
+# networks:
+#   backend-network:
+#   frontend-network:
