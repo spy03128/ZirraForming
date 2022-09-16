@@ -5,14 +5,14 @@ spring:
   # 데이터 소스 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/zirraforming?serverTimezone=Asia/Seoul
-    username: root
-    password: admin1234
+#    url: jdbc:mysql://mysql:3307/zirraforming?serverTimezone=Asia/Seoul
+#    username: root
+#    password: admin1234
 
   # Redis 설정
-  redis:
-    host: localhost
-    port: 6380
+#  redis:
+#    host: redis
+#    port: 6380
 
   # JPA 설정
   jpa:
