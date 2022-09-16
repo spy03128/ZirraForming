@@ -6,8 +6,8 @@ import styled from "styled-components";
 import Earth from "../components/three/earth";
 
 const CanvasWrap = styled.div`
-  width: "100vw";
-  height: "100vh";
+  width: 100vw;
+  height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("/assets/bg/space.jfif");
   background-position: center center;
