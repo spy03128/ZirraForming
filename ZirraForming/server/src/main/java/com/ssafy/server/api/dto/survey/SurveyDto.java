@@ -1,16 +1,14 @@
-package com.ssafy.server.api.dto;
+package com.ssafy.server.api.dto.survey;
 
 import com.ssafy.server.domain.entity.Survey;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class SurveyResponse {
+public class SurveyDto {
     private final String question;
     private final String answer1;
     private final String answer2;
@@ -18,7 +16,7 @@ public class SurveyResponse {
     private final List<Integer> weight2;
     private final String imgUrl;
 
-    public SurveyResponse(Survey survey) {
+    public SurveyDto(Survey survey) {
         this.question = survey.getQuestion();
         this.answer1 = survey.getAnswer1();
         this.answer2 = survey.getAnswer2();
