@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { BasicButton } from "../../items/Button";
+import { BasicButton } from "../../items/styleButton";
+import { useState } from "react";
+import Quiz from "./Quiz";
 
 const Wrapper = styled(motion.div)`
 	position: relative;
@@ -9,7 +11,7 @@ const Wrapper = styled(motion.div)`
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
-	opacity: 0.7;
+	opacity: 1;
 	border-radius: 5vh;
 	width: 32vw;
 	height: 75vh;
@@ -20,63 +22,37 @@ const Wrapper = styled(motion.div)`
 	}
 `;
 
-const Title = styled(motion.h1)`
-	font-size: min(6vw, 80px);
-	text-align: center;
-	font-weight: 400;
-	white-space: nowrap;
-`;
-
-const TitleWrap = styled(motion.div)`
-	display: grid;
-	grid-template-rows: 1fr 3fr;
-	grid-template-columns: 1fr;
-	width: 100%;
-	height: 100%;
-	padding: 40px 30px 5px;
-
-	.title__top {
-		font-size: min(4vw, 40px);
-		color: #fbc531;
-		text-align: center;
-		align-self: end;
-	}
-
-	.title__main {
-		align-self: start;
-		color: #3c9f58;
-		text-align: center;
-		line-height: min(18vw, 150px);
-		font-size: min(18vw, 150px);
-	}
-`;
-
-const Content = styled(motion.div)`
-	font-size: min(3vw, 30px);
-	text-align: center;
-	word-break: keep-all;
-`;
-
-const ButtonWrap = styled(motion.div)`
-	justify-self: center;
-	display: flex;
-	width: min(80vw, 800px);
-	height: 100%;
-	align-items: center;
-	justify-content: space-evenly;
-`;
-
 function Intro() {
+	const [start, setStart] = useState(true);
 	return (
 		<>
-			<Wrapper>
-				<h2>캐릭터로 알아보는 나의 환경 스타일은?</h2>
-				<img
-					src="/assets/styleQuiz/문제0.png"
-					style={{ width: "60%" }}
-					alt=""
-				/>
-			</Wrapper>
+			{start ? (
+				<Wrapper>
+					<div
+						style={{
+							width: "80%",
+							height: "20px",
+							backgroundColor: "#9ba3eb",
+							margin: "7vh 0px 3vh 0px",
+						}}
+					></div>
+					<h2>캐릭터로 알아보는 나의 환경 스타일은?</h2>
+					<img
+						src="/assets/styleQuiz/문제0.png"
+						style={{ width: "60%", margin: "3vh 0 2vh 0 " }}
+						alt=""
+					/>
+					<BasicButton
+						onClick={() => {
+							setStart(!start);
+						}}
+					>
+						START
+					</BasicButton>
+				</Wrapper>
+			) : (
+				<Quiz />
+			)}
 		</>
 	);
 }
