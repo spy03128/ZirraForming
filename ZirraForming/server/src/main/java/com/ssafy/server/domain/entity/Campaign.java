@@ -25,7 +25,7 @@ public class Campaign {
 
     private String imgUrl;
 
-    private Campaign(CharacterType characterType, String name, String url, String imgUrl) {
+    public Campaign(CharacterType characterType, String name, String url, String imgUrl) {
         this.characterType = characterType;
         this.name = name;
         this.url = url;

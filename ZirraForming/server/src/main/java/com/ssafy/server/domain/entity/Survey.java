@@ -30,7 +30,7 @@ public class Survey {
     @Column(name = "img_url")
     private String imgUrl;
 
-    private Survey(String question, String answer1, String answer2, String weight1, String weight2, String imgUrl) {
+    public Survey(String question, String answer1, String answer2, String weight1, String weight2, String imgUrl) {
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;

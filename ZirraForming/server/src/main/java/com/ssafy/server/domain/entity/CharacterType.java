@@ -33,7 +33,7 @@ public class CharacterType {
     @OneToMany(mappedBy = "characterType")
     private List<Campaign> campaignList = new ArrayList<>();
 
-    private CharacterType(String name, String displayName, String description, String imgUrl) {
+    public CharacterType(String name, String displayName, String description, String imgUrl) {
         this.name = name;
         this.displayName = displayName;
         this.description = description;
