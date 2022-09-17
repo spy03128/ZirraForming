@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 
-@Import(SecurityConfig.class)
 @ExtendWith(MockitoExtension.class)
 @DisplayName("환경유형검사 테스트")
 class SurveyServiceTest {
