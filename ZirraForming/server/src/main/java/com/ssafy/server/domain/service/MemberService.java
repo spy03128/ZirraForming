@@ -3,16 +3,12 @@ package com.ssafy.server.domain.service;
 import com.ssafy.server.domain.entity.Member;
 import com.ssafy.server.domain.exception.MemberNotFountException;
 import com.ssafy.server.domain.repository.MemberRepository;
-import com.ssafy.server.oauth.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -45,6 +41,7 @@ public class MemberService {
         findMember.updateNickname(nickname);
     }
 
+    @Transactional
     public boolean deleteMember(Long memberId){
 
         try {
