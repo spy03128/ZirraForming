@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,5 +37,20 @@ class MemberServiceTest {
         // then
         Assertions.assertThat(result1).isFalse();
         Assertions.assertThat(result2).isTrue();
+    }
+
+    @DisplayName("멤버 닉네임 변경")
+    @Test
+    void changeNickname() {
+        // given
+        Long testId = 1L;
+        Member testData = Member.of("testemail", "nickname0");
+        given(memberRepository.findById(testId)).willReturn(Optional.of(testData));
+
+        // when
+        memberService.changeNickname(testId, "nickname1");
+
+        // then
+        Assertions.assertThat(memberRepository.findById(testId).get().getNickname()).isEqualTo("nickname1");
     }
 }

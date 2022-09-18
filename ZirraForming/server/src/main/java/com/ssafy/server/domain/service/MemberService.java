@@ -31,4 +31,14 @@ public class MemberService {
         if(findMember == null) return true;
         else return false;
     }
+
+    @Transactional
+    public void changeNickname(Long memberId, String nickname){
+        // 멤버 조회
+        Member findMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFountException(memberId));
+
+        // 멤버 닉네임 업데이트
+        findMember.updateNickname(nickname);
+    }
 }
