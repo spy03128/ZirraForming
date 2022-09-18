@@ -88,7 +88,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 new Date(new Date().getTime() + tokenProperties.getAuth().getRefreshTokenExpiry())
         );
 
-        saveRefreshToken(refreshToken, String.valueOf(memberId));
+        saveRefreshToken(refreshToken, "refreshToken:" + String.valueOf(memberId));
         cookieRefreshToken(request, response, refreshToken);
     }
 
