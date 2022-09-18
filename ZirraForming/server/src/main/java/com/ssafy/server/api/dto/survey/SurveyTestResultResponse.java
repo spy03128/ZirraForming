@@ -15,7 +15,7 @@ public class SurveyTestResultResponse implements Serializable {
     private final List<CampaignDto> campaigns;
 
     public SurveyTestResultResponse(CharacterType result) {
-        this.characterName = result.getName();
+        this.characterName = result.getDisplayName() + " " + result.getName();
         this.characterImgUrl = result.getImgUrl();
         this.description = result.getDescription();
         this.campaigns = result.getCampaignList().stream().map(CampaignDto::new).collect(Collectors.toList());
