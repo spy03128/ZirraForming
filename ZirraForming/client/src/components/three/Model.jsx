@@ -50,7 +50,7 @@ function Earth(props) {
 
   const scroll = useScroll();
 
-  // 지구 GUI
+  // 지구 GUI Earth 파일명 변경확인
   useEffect(() => {
     gui
       .add(earth.current.position, "x")
