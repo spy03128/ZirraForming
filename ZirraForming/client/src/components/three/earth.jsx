@@ -131,7 +131,7 @@ function Earth(props) {
     if (firstAni) {
       gsap
         .to(earth.current.position, {
-          y: -650,
+          y: -700,
         })
         .duration(3);
       gsap
