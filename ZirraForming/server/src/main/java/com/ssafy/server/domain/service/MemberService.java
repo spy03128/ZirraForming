@@ -1,13 +1,11 @@
 package com.ssafy.server.domain.service;
 
-import com.ssafy.server.oauth.token.AuthToken;
-import com.ssafy.server.oauth.token.AuthTokenProvider;
+import com.ssafy.server.domain.entity.Member;
+import com.ssafy.server.domain.exception.MemberNotFountException;
+import com.ssafy.server.domain.repository.MemberRepository;
 import com.ssafy.server.oauth.utils.CookieUtil;
-import com.ssafy.server.oauth.utils.HeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class MemberService {
 
+    private final MemberRepository memberRepository;
+
     public void logout(HttpServletRequest request, HttpServletResponse response){
         CookieUtil.deleteCookie(request, response, "refreshToken");
+    }
+
+    public boolean duplicatedCheck(String nickname){
+        // 닉네임 중복 확인
+        Member findMember = memberRepository.findByNickname(nickname);
+
+        if(findMember == null) return true;
+        else return false;
     }
 }
