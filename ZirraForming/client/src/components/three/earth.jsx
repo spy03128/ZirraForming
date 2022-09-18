@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
+import React, { Suspense, useEffect, useRef, useState } from "react";
+import { useFrame } from "@react-three/fiber";
 import {
   OrbitControls,
   Stars,
@@ -7,28 +7,36 @@ import {
   OrthographicCamera,
   useScroll,
   Scroll,
+  useTexture,
 } from "@react-three/drei";
 import * as THREE from "three";
+import dat from "dat.gui";
+import Summary from "../main/Summary";
 
 import EarthDayMap from "../../assets/textures/8k_earth_daymap.jpg";
 import EarthNormalMap from "../../assets/textures/8k_earth_normal_map.jpg";
 import EarthSpecularMap from "../../assets/textures/8k_earth_specular_map.jpg";
 import EarthCloudsMap from "../../assets/textures/8k_earth_clouds.jpg";
-import { TextureLoader } from "three";
-import dat from "dat.gui";
+
 import Intro from "../main/Intro";
 import gsap from "gsap";
-import Summary from "../main/Summary";
+import Spinner from "../main/Spinner";
 
 const gui = new dat.GUI();
 
 // 지구 컴포넌트
 function Earth(props) {
-  const [colorMap, normalMap, specularMap, cloudsMap] = useLoader(
-    TextureLoader,
-    [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
-  );
+  // const [colorMap, normalMap, specularMap, cloudsMap] = useLoader(
+  //   TextureLoader,
+  //   [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
+  // );
 
+  const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
+    EarthDayMap,
+    EarthNormalMap,
+    EarthSpecularMap,
+    EarthCloudsMap,
+  ]);
   // 애니메이션 조작
   const [firstAni, setFirstAni] = useState(true);
   const [secondAni, setSecondAni] = useState(false);
@@ -41,10 +49,6 @@ function Earth(props) {
   const oCamera = useRef(); // Orthographic 카메라 객체
 
   const scroll = useScroll();
-
-  useEffect(() => {
-    console.log(earth.current.scale);
-  }, [earth]);
 
   // 지구 GUI
   useEffect(() => {
@@ -104,6 +108,7 @@ function Earth(props) {
     const f1 = scroll.range(0, 1 / 4);
     // console.log(f1);
     //// Intro Trigger
+    // console.log(oCamera.current.position);
 
     // 지구 회전
     const elapsedTime = clock.getElapsedTime();
@@ -112,12 +117,14 @@ function Earth(props) {
     // 1번째 페이지 무빙
     if (scroll.scroll.current === 0) {
       setFirstAni(true);
+      setSummaryPage(false);
       setSecondAni(false);
     }
 
     if (Math.floor(scroll.scroll.current * 10) === 2) {
       setSecondAni(true);
       setFirstAni(false);
+      setSummaryPage(true);
     }
 
     // 애니메이션
@@ -139,15 +146,15 @@ function Earth(props) {
     if (secondAni) {
       gsap
         .to(earth.current.position, {
-          y: 125,
+          y: 150,
         })
         .duration(2);
 
       gsap
         .to(earth.current.scale, {
-          x: 200,
-          y: 200,
-          z: 200,
+          x: 300,
+          y: 300,
+          z: 300,
         })
         .duration(2);
 
@@ -158,15 +165,19 @@ function Earth(props) {
   return (
     <>
       {/* 카메라 설정 */}
-
-      <Stars
-        saturation={100}
-        radius={400}
-        count={20000}
-        factor={0}
-        fade={true}
-        speed={1}
+      <OrthographicCamera
+        makeDefault
+        ref={oCamera}
+        zoom={1}
+        left={-(window.innerWidth / window.innerHeight)}
+        right={window.innerWidth / window.innerHeight}
+        top={1}
+        bottom={-1}
+        near={0.01}
+        far={1000}
+        position={[0, 0, 10]}
       />
+
       {/* <PerspectiveCamera
             makeDefault
             ref={pCamera}
@@ -176,50 +187,40 @@ function Earth(props) {
             near={0.1}
             far={1000}
           /> */}
-      <OrthographicCamera
-        makeDefault
-        ref={oCamera}
-        zoom={1}
-        left={-(window.innerWidth / window.innerHeight)}
-        right={window.innerWidth / window.innerHeight}
-        top={1}
-        bottom={-1}
-        near={1}
-        far={1000}
-        position={[0, 0, 10]}
-      />
 
       {/* 컨트롤 설정 */}
       {/* <OrbitControls /> */}
 
       {/* 조명설정 */}
+      <ambientLight intensity={1} color="white" />
       <pointLight color="#f6f3ea" position={[0, 0, 0]} intensity={1} />
 
       {/* 오브젝트 */}
-      <group ref={earth} position={[0, 0, -500]} scale={300}>
-        <mesh>
-          <sphereGeometry args={[1.005, 32, 32]} />
-          <meshPhongMaterial
-            map={cloudsMap}
-            opacity={0.4}
-            depthWrite={true}
-            transparent={true}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-        <mesh>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshPhongMaterial specularMap={specularMap} />
-          <meshStandardMaterial
-            map={colorMap}
-            normalMap={normalMap}
-            metalness={0.4}
-            roughness={0.7}
-          />
-        </mesh>
-      </group>
-      <Summary />
-
+      <Suspense fallback={<Spinner />}>
+        <group ref={earth} position={[0, 0, -500]} scale={300}>
+          <mesh>
+            <sphereGeometry args={[1.005, 32, 16]} />
+            <meshPhongMaterial
+              map={cloudsMap}
+              opacity={0.4}
+              depthWrite={true}
+              transparent={true}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+          <mesh>
+            <sphereGeometry args={[1, 32, 16]} />
+            <meshPhongMaterial specularMap={specularMap} />
+            <meshStandardMaterial
+              map={colorMap}
+              normalMap={normalMap}
+              metalness={0.4}
+              roughness={0.7}
+            />
+          </mesh>
+        </group>
+        {summaryPage ? <Summary /> : null}
+      </Suspense>
       <Scroll html>
         <Intro />
       </Scroll>

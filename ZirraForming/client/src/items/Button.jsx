@@ -17,6 +17,7 @@ export const BasicButton = styled(motion.button)`
   cursor: pointer;
 
   transition: all 0.3s linear;
+
   :hover {
     background-color: rgba(0, 0, 0, 0);
     color: #3c9f58;
