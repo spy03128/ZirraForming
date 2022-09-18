@@ -23,8 +23,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final RedisTemplate<String, String> redisTemplate;
 
-    public void logout(HttpServletRequest request, HttpServletResponse response){
-        CookieUtil.deleteCookie(request, response, "refreshToken");
+    public void logout(Long memberId){
+        deleteRefreshToken(memberId);
     }
 
     public boolean duplicatedCheck(String nickname){
