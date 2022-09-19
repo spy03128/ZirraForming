@@ -124,9 +124,15 @@ function Intro() {
           <br /> 행성을 생명이 살 수 있도록 만드는 작업을 의미한다
         </Content>
         <ButtonWrap variants={childrenVar}>
-          <BasicButton variants={childrenVar}>환경스타일 분석</BasicButton>
-          <BasicButton variants={childrenVar}>별보러 갈래?</BasicButton>
-          <BasicButton variants={childrenVar}>환경 퀴즈 풀기</BasicButton>
+          <a href="/style">
+            <BasicButton variants={childrenVar}>환경스타일 분석</BasicButton>
+          </a>
+          <a href="/campaign">
+            <BasicButton variants={childrenVar}>별보러 갈래?</BasicButton>
+          </a>
+          <a href="/quiz">
+            <BasicButton variants={childrenVar}>환경 퀴즈 풀기</BasicButton>
+          </a>
         </ButtonWrap>
         <SVG src={MouseSVG} variants={childrenVar}></SVG>
       </Wrapper>

@@ -22,6 +22,8 @@ import Intro from "../main/Intro";
 import gsap from "gsap";
 import Spinner from "../main/Spinner";
 import GlobalTemperature from "../main/GlobalTemperature";
+import urls from "../../apis/urls";
+import { MainData } from "../../atoms";
 
 const gui = new dat.GUI();
 
@@ -31,6 +33,7 @@ function Earth(props) {
   //   TextureLoader,
   //   [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
   // );
+  // Recoil Data 불러오기
 
   const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
     EarthDayMap,
@@ -49,6 +52,7 @@ function Earth(props) {
   const [summaryPage, setSummaryPage] = useState(false);
   const [globalTem, setGlobalTem] = useState(false);
 
+  const cloud = useRef();
   const earth = useRef(); // 지구객체
   const pCamera = useRef(); // Perspective 카메라 객체
   const oCamera = useRef(); // Orthographic 카메라 객체
@@ -116,8 +120,11 @@ function Earth(props) {
     // console.log(oCamera.current.position);
 
     // 지구 회전
+
+    cloud.current.rotation.y -= delta / 50;
+
     if (rotate) {
-      earth.current.rotation.y += delta / 4;
+      earth.current.rotation.y += delta / 8;
     }
 
     // 1번째 페이지 무빙
@@ -129,7 +136,7 @@ function Earth(props) {
       setSecondAni(false);
     }
 
-    if (Math.floor(scroll.scroll.current * 10) === 2) {
+    if (Math.floor(scroll.scroll.current * 100) === 6) {
       setSummaryPage(true);
       setIntroPage(false);
       setGlobalTem(false);
@@ -139,7 +146,7 @@ function Earth(props) {
       setSecondAni(true);
     }
 
-    if (Math.floor(scroll.scroll.current * 10) === 4) {
+    if (Math.floor(scroll.scroll.current * 100) === 12) {
       setGlobalTem(true);
       setSummaryPage(false);
 
@@ -176,9 +183,9 @@ function Earth(props) {
 
       gsap
         .to(earth.current.scale, {
-          x: Math.min(300, window.innerWidth - 600),
-          y: Math.min(300, window.innerWidth - 600),
-          z: Math.min(300, window.innerWidth - 600),
+          x: Math.min(300, window.innerWidth - 550),
+          y: Math.min(300, window.innerWidth - 550),
+          z: Math.min(300, window.innerWidth - 550),
         })
         .duration(2);
       gsap.to(oCamera.current.position, {
@@ -237,6 +244,7 @@ function Earth(props) {
           /> */}
 
       {/* 컨트롤 설정 */}
+
       {/* <OrbitControls /> */}
 
       {/* 조명설정 */}
@@ -245,7 +253,7 @@ function Earth(props) {
 
       {/* 오브젝트 */}
       <group ref={earth} position={[0, 0, -500]}>
-        <mesh>
+        <mesh ref={cloud}>
           <sphereGeometry args={[1.005, 32, 16]} />
           <meshPhongMaterial
             map={cloudsMap}
