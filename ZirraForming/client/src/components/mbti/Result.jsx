@@ -61,6 +61,17 @@ function Result() {
 				>
 					환경 상식 퀴즈 풀러가기
 				</BasicButton>
+				<BasicButton
+					style={{
+						height: "230px",
+
+						backgroundColor: "#673f3f",
+						marginTop: "2vh",
+						backgroundImage: "/assets/homeBanner.png",
+						backgroundPosition: "center center",
+						backgroundSize: "cover",
+					}}
+				></BasicButton>
 			</Wrapper>
 		</>
 	);
