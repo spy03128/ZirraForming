@@ -10,7 +10,7 @@ const Wrapper = styled(motion.div)`
   position: fixed;
   left: 10vw;
   /* top: 10vh; */
-  top: 150px;
+  top: 100px;
 
   display: grid;
   grid-template-rows: 1fr 4fr 2fr 2fr 1px;

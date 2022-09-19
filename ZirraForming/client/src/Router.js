@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Main from "./pages/Main";
 import Mbti from "./pages/Mbti";
 

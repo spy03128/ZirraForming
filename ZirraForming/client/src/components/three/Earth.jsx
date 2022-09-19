@@ -21,6 +21,7 @@ import EarthCloudsMap from "../../assets/textures/8k_earth_clouds.jpg";
 import Intro from "../main/Intro";
 import gsap from "gsap";
 import Spinner from "../main/Spinner";
+import GlobalTemperature from "../main/GlobalTemperature";
 
 const gui = new dat.GUI();
 
@@ -41,9 +42,12 @@ function Earth(props) {
   const [rotate, setRotate] = useState(true);
   const [firstAni, setFirstAni] = useState(true);
   const [secondAni, setSecondAni] = useState(false);
+  const [thridAni, setThirdAni] = useState(false);
 
   // HTML 조작
+  const [introPage, setIntroPage] = useState(false);
   const [summaryPage, setSummaryPage] = useState(false);
+  const [globalTem, setGlobalTem] = useState(false);
 
   const earth = useRef(); // 지구객체
   const pCamera = useRef(); // Perspective 카메라 객체
@@ -106,7 +110,7 @@ function Earth(props) {
     // 스크롤
     // console.log(scroll.scroll.current);
     // console.log(scroll);
-    const f1 = scroll.range(0, 1 / 4);
+
     // console.log(f1);
     //// Intro Trigger
     // console.log(oCamera.current.position);
@@ -118,15 +122,31 @@ function Earth(props) {
 
     // 1번째 페이지 무빙
     if (scroll.scroll.current === 0) {
-      setFirstAni(true);
+      setIntroPage(true);
       setSummaryPage(false);
+
+      setFirstAni(true);
       setSecondAni(false);
     }
 
     if (Math.floor(scroll.scroll.current * 10) === 2) {
-      setSecondAni(true);
-      setFirstAni(false);
       setSummaryPage(true);
+      setIntroPage(false);
+      setGlobalTem(false);
+
+      setFirstAni(false);
+      setThirdAni(false);
+      setSecondAni(true);
+    }
+
+    if (Math.floor(scroll.scroll.current * 10) === 4) {
+      setGlobalTem(true);
+      setSummaryPage(false);
+
+      setFirstAni(false);
+      setSecondAni(false);
+      setThirdAni(true);
+      setRotate(false);
     }
 
     // 애니메이션
@@ -134,13 +154,14 @@ function Earth(props) {
       gsap
         .to(earth.current.position, {
           y: -700,
+          x: 0,
         })
         .duration(3);
       gsap
         .to(earth.current.scale, {
-          x: 450,
-          y: 450,
-          z: 450,
+          x: Math.min(450, window.innerWidth - 50),
+          y: Math.min(450, window.innerWidth - 50),
+          z: Math.min(450, window.innerWidth - 50),
         })
         .duration(3);
     }
@@ -149,18 +170,42 @@ function Earth(props) {
       gsap
         .to(earth.current.position, {
           y: 150,
+          x: 0,
         })
         .duration(2);
 
       gsap
         .to(earth.current.scale, {
-          x: 300,
-          y: 300,
-          z: 300,
+          x: Math.min(300, window.innerWidth - 600),
+          y: Math.min(300, window.innerWidth - 600),
+          z: Math.min(300, window.innerWidth - 600),
+        })
+        .duration(2);
+      gsap.to(oCamera.current.position, {
+        x: 0,
+      });
+
+      setSummaryPage(true);
+    }
+
+    if (thridAni) {
+      gsap
+        .to(earth.current.scale, {
+          x: Math.min(300, window.innerWidth - 600),
+          y: Math.min(300, window.innerWidth - 600),
+          z: Math.min(300, window.innerWidth - 600),
+        })
+        .duration(2);
+      gsap
+        .to(earth.current.position, {
+          x: -120,
+          y: 30,
         })
         .duration(2);
 
-      setSummaryPage(true);
+      gsap.to(oCamera.current.position, {
+        x: 80,
+      });
     }
   });
 
@@ -199,8 +244,7 @@ function Earth(props) {
       <pointLight color="#f6f3ea" position={[0, 0, 0]} intensity={1} />
 
       {/* 오브젝트 */}
-      {/* <Suspense fallback={<Spinner />}> */}
-      <group ref={earth} position={[0, 0, -500]} scale={300}>
+      <group ref={earth} position={[0, 0, -500]}>
         <mesh>
           <sphereGeometry args={[1.005, 32, 16]} />
           <meshPhongMaterial
@@ -223,9 +267,11 @@ function Earth(props) {
         </mesh>
       </group>
       {summaryPage ? <Summary /> : null}
-      {/* </Suspense> */}
+
       <Scroll html>
-        <Intro />
+        {introPage ? <Intro /> : null}
+        {globalTem ? <GlobalTemperature /> : null}
+        {/* <GlobalTemperature /> */}
       </Scroll>
     </>
   );
