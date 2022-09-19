@@ -15,6 +15,9 @@ const GlobalStyle = createGlobalStyle`
 	  background-size: cover;
    
   }
+  a {
+    text-decoration: none;
+  }
   * {
     margin: 0;
     padding: 0;

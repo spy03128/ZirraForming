@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Logo from "../assets/logo/jirav1.svg";
+// import LogoPNG from "../assets/logo/jirav1.png";
 
 const Nav = styled.div`
 	display: grid;
@@ -10,6 +11,7 @@ const Nav = styled.div`
 	grid-template-rows: 80px;
 	width: 100%;
 	height: 80px;
+
 
 	.logo {
 		width: 100%;
