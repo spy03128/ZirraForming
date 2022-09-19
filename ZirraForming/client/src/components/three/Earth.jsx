@@ -38,6 +38,7 @@ function Earth(props) {
     EarthCloudsMap,
   ]);
   // 애니메이션 조작
+  const [rotate, setRotate] = useState(true);
   const [firstAni, setFirstAni] = useState(true);
   const [secondAni, setSecondAni] = useState(false);
 
@@ -111,8 +112,9 @@ function Earth(props) {
     // console.log(oCamera.current.position);
 
     // 지구 회전
-    const elapsedTime = clock.getElapsedTime();
-    earth.current.rotation.y = elapsedTime / 12;
+    if (rotate) {
+      earth.current.rotation.y += delta / 4;
+    }
 
     // 1번째 페이지 무빙
     if (scroll.scroll.current === 0) {
@@ -169,13 +171,14 @@ function Earth(props) {
         makeDefault
         ref={oCamera}
         zoom={1}
-        left={-(window.innerWidth / window.innerHeight)}
-        right={window.innerWidth / window.innerHeight}
-        top={1}
-        bottom={-1}
-        near={0.01}
-        far={1000}
+        // left={-(window.innerWidth / window.innerHeight)}
+        // right={window.innerWidth / window.innerHeight}
+        // top={1}
+        // bottom={-1}
+        // near={0.01}
+        // far={1000}
         position={[0, 0, 10]}
+        // updateProjectionMatrix={true}
       />
 
       {/* <PerspectiveCamera
@@ -196,31 +199,31 @@ function Earth(props) {
       <pointLight color="#f6f3ea" position={[0, 0, 0]} intensity={1} />
 
       {/* 오브젝트 */}
-      <Suspense fallback={<Spinner />}>
-        <group ref={earth} position={[0, 0, -500]} scale={300}>
-          <mesh>
-            <sphereGeometry args={[1.005, 32, 16]} />
-            <meshPhongMaterial
-              map={cloudsMap}
-              opacity={0.4}
-              depthWrite={true}
-              transparent={true}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-          <mesh>
-            <sphereGeometry args={[1, 32, 16]} />
-            <meshPhongMaterial specularMap={specularMap} />
-            <meshStandardMaterial
-              map={colorMap}
-              normalMap={normalMap}
-              metalness={0.4}
-              roughness={0.7}
-            />
-          </mesh>
-        </group>
-        {summaryPage ? <Summary /> : null}
-      </Suspense>
+      {/* <Suspense fallback={<Spinner />}> */}
+      <group ref={earth} position={[0, 0, -500]} scale={300}>
+        <mesh>
+          <sphereGeometry args={[1.005, 32, 16]} />
+          <meshPhongMaterial
+            map={cloudsMap}
+            opacity={0.4}
+            // depthWrite={true}
+            transparent={true}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+        <mesh>
+          <sphereGeometry args={[1, 32, 16]} />
+          <meshPhongMaterial specularMap={specularMap} />
+          <meshStandardMaterial
+            map={colorMap}
+            normalMap={normalMap}
+            metalness={0.4}
+            roughness={0.7}
+          />
+        </mesh>
+      </group>
+      {summaryPage ? <Summary /> : null}
+      {/* </Suspense> */}
       <Scroll html>
         <Intro />
       </Scroll>

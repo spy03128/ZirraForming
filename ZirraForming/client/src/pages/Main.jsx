@@ -40,11 +40,11 @@ function Main() {
           fade={true}
           speed={1}
         />
-        {/* <Suspense fallback={<Spinner />}> */}
-        <ScrollControls pages={4}>
-          <Earth />
-        </ScrollControls>
-        {/* </Suspense> */}
+        <Suspense fallback={<Spinner />}>
+          <ScrollControls pages={4}>
+            <Earth />
+          </ScrollControls>
+        </Suspense>
       </Canvas>
     </CanvasWrap>
   );
