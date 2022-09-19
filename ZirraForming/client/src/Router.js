@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Mbti from "./pages/Mbti";
+import MbtiResult from "./pages/MbtiResult";
 
 function Router() {
 	return (
@@ -8,6 +9,7 @@ function Router() {
 			<Routes>
 				<Route path="/" element={<Main />}></Route>
 				<Route path="/style" element={<Mbti />}></Route>
+				<Route path="/style/result" element={<MbtiResult />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);
