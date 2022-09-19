@@ -42,25 +42,16 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean deleteMember(Long memberId){
+    public void deleteMember(Long memberId){
+        // 멤버 조회
+        Member findMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFountException(memberId));
 
-        try {
-            // 멤버 조회
-            Member findMember = memberRepository.findById(memberId)
-                    .orElseThrow(() -> new MemberNotFountException(memberId));
+        // 멤버 삭제
+        memberRepository.deleteById(findMember.getId());
 
-            // 멤버 삭제
-            memberRepository.deleteById(memberId);
-
-            // 리프레시 토큰 삭제
-            deleteRefreshToken(memberId);
-
-        }catch (MemberNotFountException e){
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
+        // 리프레시 토큰 삭제
+        deleteRefreshToken(findMember.getId());
     }
 
     public void deleteRefreshToken(Long memberId){

@@ -27,27 +27,23 @@ public class MemberApiController {
 
     @GetMapping("/duplicatedcheck")
     public ResponseEntity<DuplicatedCheckResultResponse> duplicatedCheck(@RequestParam("nickname") String nickname){
-        if(memberService.duplicatedCheck(nickname)) return ResponseEntity.ok(DuplicatedCheckResultResponse.of(true, "사용가능한 닉네임입니다."));
-        else return ResponseEntity.ok(DuplicatedCheckResultResponse.of(false, "이미 사용 중인 닉네임입니다."));
+        if(memberService.duplicatedCheck(nickname)) {
+            return ResponseEntity.ok(DuplicatedCheckResultResponse.of(true, "사용가능한 닉네임입니다."));
+        }
+        else {
+            return ResponseEntity.ok(DuplicatedCheckResultResponse.of(false, "이미 사용 중인 닉네임입니다."));
+        }
     }
 
     @PatchMapping("/member/{memberId}/changenickname")
     public ResponseEntity<ResultDto> changeNickname(@PathVariable("memberId") Long memberId, @RequestBody Map<String,String> req){
-        try {
-            memberService.changeNickname(memberId, req.get("nickname"));
-            return ResponseEntity.ok(ResultDto.of("닉네임이 변경되었습니다."));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(ResultDto.of("요청하신 회원정보가 존재하지 않습니다."));
-        }
+        memberService.changeNickname(memberId, req.get("nickname"));
+        return ResponseEntity.ok(ResultDto.of("닉네임이 변경되었습니다."));
     }
 
     @DeleteMapping("/member/{memberId}")
     public ResponseEntity<ResultDto> deleteMember(HttpServletRequest request, HttpServletResponse response, @PathVariable("memberId") Long memberId){
         CookieUtil.deleteCookie(request, response, "refreshToken");
-        if(memberService.deleteMember(memberId)){
-            return ResponseEntity.ok(ResultDto.of("회원탈퇴가 완료되었습니다."));
-        }else{
-            return ResponseEntity.badRequest().body(ResultDto.of("요청하신 회원정보가 존재하지 않습니다."));
-        }
+        return ResponseEntity.ok(ResultDto.of("회원탈퇴가 완료되었습니다."));
     }
 }
