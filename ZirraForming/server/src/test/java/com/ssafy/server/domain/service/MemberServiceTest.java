@@ -28,7 +28,7 @@ class MemberServiceTest {
     void duplicatedCheck() {
         // given
         Member testData = Member.of("testemail", "testnickname1");
-        given(memberRepository.findByNickname("testnickname1")).willReturn(testData);
+        given(memberRepository.findByNickname("testnickname1")).willReturn(Optional.of(testData));
 
         // when
         boolean result1 = memberService.duplicatedCheck("testnickname1");

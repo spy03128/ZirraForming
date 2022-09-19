@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,9 +27,9 @@ public class MemberService {
 
     public boolean duplicatedCheck(String nickname){
         // 닉네임 중복 확인
-        Member findMember = memberRepository.findByNickname(nickname);
+        Optional<Member> findMember = memberRepository.findByNickname(nickname);
 
-        if(findMember == null) return true;
+        if(findMember.isEmpty()) return true;
         else return false;
     }
 
