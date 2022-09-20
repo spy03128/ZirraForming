@@ -52,10 +52,10 @@ function Main() {
       >
         <RecoilBridge>
           <Stars
-            saturation={100}
-            radius={400}
+            saturation={3000}
+            radius={1200}
             count={20000}
-            factor={0}
+            factor={1}
             fade={true}
             speed={1}
           />

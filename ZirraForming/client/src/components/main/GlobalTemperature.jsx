@@ -2,17 +2,19 @@ import { Html } from "@react-three/drei";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: relative;
   top: 200vh;
-  left: 40vw;
+  left: 50%;
 
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  width: 60vw;
+  line-break: normal;
+
+  transform: translate(50%, 0);
+  width: min(calc(50vw - 10px), 1000px);
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     align-self: center;
     margin-bottom: 100vh;
   }
