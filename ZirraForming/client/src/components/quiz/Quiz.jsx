@@ -13,19 +13,20 @@ const Wrapper = styled(motion.div)`
 	background-color: white;
 	opacity: 1;
 	border-radius: 5vh;
-	width: 32vw;
-	height: 75vh;
-
+	width: 500px;
+	height: 650px;
 	h2 {
 		font-size: 100;
 		color: black;
 	}
 	@media screen and (${(props) => props.theme.tablet}) {
 		width: 70vw;
-		height: 75vh;
+		height: 700px;
 	}
 	@media screen and (${(props) => props.theme.mobile}) {
-		width: 80vw;
+		width: 300px;
+		min-width: 300px;
+		height: 500px;
 	}
 `;
 
