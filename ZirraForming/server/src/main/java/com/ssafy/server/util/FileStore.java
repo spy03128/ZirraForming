@@ -1,5 +1,6 @@
-package com.ssafy.server.file;
+package com.ssafy.server.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class FileStore {
 
@@ -21,15 +23,27 @@ public class FileStore {
 
     public String saveFile(@RequestParam MultipartFile file) throws IOException {
         if (file.isEmpty()){
-            return "저장할 이미지가 없습니다.";
+            return null;
         }
-
         String originalFilename = file.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
 
-        file.transferTo(new File(getFullPath(storeFileName))) ;
+        checkFolder();
 
-        return "이미지가 저장되었습니다.";
+        file.transferTo(new File(getFullPath(storeFileName)));
+
+        // 데이터베이스 저장 로직
+
+        return storeFileName;
+    }
+
+    private void checkFolder() {
+        File folder = new File(fileDir);
+        if (!folder.exists()) {
+            log.info("{} 폴더가 존재하지 않습니다.", fileDir);
+            folder.mkdir();
+            log.info("{} 폴더를 만들었습니다.", fileDir);
+        }
     }
 
     private String createStoreFileName(String originalFilename) {
