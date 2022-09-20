@@ -35,7 +35,7 @@ function Main() {
 
   useEffect(() => {
     axios.get(urls.data()).then(({ data }) => {
-      setAllData(data);
+      setAllData(data.data);
       // console.log(data);
     });
   }, []);
