@@ -1,4 +1,4 @@
-drop database zirraforming;
+DROP database IF EXISTS zirraforming;
 create database zirraforming;
 use zirraforming;
 
@@ -168,3 +168,15 @@ CREATE TABLE `ice_sheets` (
   `mass` double NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--  환경유형 검사 데이터 삽입
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (1, '가게에서 주는 일회용컵에 담아간다.', '“이럴줄 알고 준비했지!” 라며 개인 텀블러에 담아간다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C0.png', '커피를 마시기 위해 카페에 방문한 나는', '0,1,0,0,0,0,0,0', '2,0,1,1,1,1,1,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (2, '빙하가 왜 녹았는지 이유를 분석한다.', '“북극곰 맘 아파 ㅠㅠ” 하며 슬퍼한다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C1.png', '(환경오염 관련 기사) 빙하가 녹아 북극곰이 보금자리를 잃은 뉴스 기사를 보면 나는', '0,0,0,3,0,1,0,0', '0,0,3,0,0,0,0,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (3, '송장과 테이프를 다 뜯고, 박스를 접어서 버린다.', '매직으로 택배송장의 개인정보를 지우고 박스를 접어서 버린다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C2.png', '(택배 박스 버릴 때) 내용물을 다 뺀 후 택배박스를 버릴 때 나는', '1,0,1,1,0,1,0,0', '0,1,0,1,0,1,0,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (4, '주 1-2회 장보는 날을 정한다.', '필요한게 생길 때마다 장을 보러간다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C3.png', '(장바구니) 식재료 구입을 위해 장을 볼 때 나는', '1,0,1,1,0,1,3,0', '0,1,0,0,0,0,0,3');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (5, '자가용을 타고 이동한다.', '자전거나 대중교통을 이용해서 이동한다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C4.png', '(교통수단) 약속 장소에 향하기 위해서 나는 ', '0,1,0,0,0,0,0,0', '2,0,1,1,0,1,0,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (6, '직접가서 여기에 버리면 안된다고 이야기한다.', '“개념이 없네”라며 혼자 속으로 흉을 본다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C5.png', '(쓰레기를 함부로 버리는 거 목격) 길거리에 종량제 봉투 없이 생활 쓰레기를 무단 투기하는 것을 목격한다면 나는', '1,0,1,1,3,0,0,0', '1,0,1,1,0,3,0,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (7, '일반쓰레기와 분리하여 분리수거를 한다.', '페트병의 라벨을 뜯고 병뚜껑을 분리하여 분리수거를 한다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C6.png', '(페트병 라벨 뜯고, 병뚜껑 분리)  생수병, 음료병을 버릴 때 나는', '1,0,1,1,0,1,0,0', '2,0,1,1,0,1,0,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (8, '직접 방문하여 활동할 수 있는 프로그램을 신청한다.', '기부 활동을 통해 실천할 수 있는 프로그램을 신청한다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C7.png', '(환경 관련 봉사활동) 환경을 지킬 수 있는 활동을 신청하려고 할 때 나는', '1,0,1,1,2,0,0,3', '1,0,1,1,0,2,3,0');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (9, '가격이 비싸도 친환경 마크가 있는 제품을 구매한다.', '자주 구매하는 제품으로 구매한다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C8.png', '(식품 살 때 친환경 마크) 평소에 제품을 구매할 때 나는', '2,0,1,1,0,1,1,0', '0,1,0,0,0,0,0,1');
+INSERT INTO zirraforming.survey (id, answer1, answer2, img_url, question, weight1, weight2) VALUES (10, '0-2개 알고 있다.', '3개 이상 알고 있다.', 'http://j7d107.p.ssafy.io/images/%EB%AC%B8%EC%A0%9C9.png', '(친환경 상점) 제로웨이스트 친환경 상점을 나는', '0,1,0,0,0,0,0,0', '1,0,1,0,0,1,0,1');
