@@ -22,6 +22,26 @@ export const SummaryData = selector({
   },
 });
 
+export const globalTemperature = selector({
+  key: "globalTemperature",
+  get: ({ get }) => {
+    const datas = get(MainData);
+
+    return datas?.global;
+  },
+});
+
+export const globalTemperatureImages = selector({
+  key: "globalTemperatureImages",
+  get: ({ get }) => {
+    const datas = get(MainData);
+
+    // return datas?.global.images;
+    return datas?.co2.images;
+  },
+});
+
+//
 export const co2Images = selector({
   key: "co2Images",
   get: ({ get }) => {

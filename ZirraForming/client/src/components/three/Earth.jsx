@@ -26,10 +26,13 @@ import Spinner from "../main/Spinner";
 import GlobalTemperature from "../main/GlobalTemperature";
 
 import { co2Images, MainData } from "../../atoms";
-import { useRecoilValue } from "recoil";
+import {
+  useRecoilBridgeAcrossReactRoots_UNSTABLE,
+  useRecoilValue,
+} from "recoil";
 import TemperatureImage from "./TemperatureImage";
 
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // 지구 컴포넌트
 function Earth(props) {
@@ -38,6 +41,7 @@ function Earth(props) {
   //   [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
   // );
   // Recoil Data 불러오기
+  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
     EarthDayMap,
@@ -177,6 +181,13 @@ function Earth(props) {
           z: Math.min(450, window.innerWidth - 50),
         })
         .duration(3);
+      gsap
+        .to(pCamera.current.rotation, {
+          y: 0,
+          x: 0,
+          z: 0,
+        })
+        .duration(2);
     }
     // 두번째 애니메이션
     if (secondAni) {
@@ -207,21 +218,22 @@ function Earth(props) {
           x: 0,
           y: 0,
           z: 1000,
+          duration: 3,
+          ease: "sine",
         })
         .duration(3);
       setSummaryPage(true);
     }
     // 세번째 에니메이션
     if (thridAni) {
-      gsap
-        .to(pCamera.current.rotation, {
-          x: -1.55,
-          y: 0.1,
-          z: 1.48,
-        })
-        .duration(3);
+      gsap.to(pCamera.current.rotation, {
+        x: -1.55,
+        y: 0.1,
+        z: 1.48,
+        duration: 3,
+        ease: "sine",
+      });
       // pCamera.current.lookAt(test.current.position);
-      console.log(pCamera.current.rotation);
       gsap
         .to(pCamera.current.position, {
           x: 1000,
@@ -300,9 +312,11 @@ function Earth(props) {
         </mesh>
       ) : null}
       <Scroll html>
-        {introPage ? <Intro /> : null}
-        {globalTem ? <GlobalTemperature /> : null}
-        {/* <GlobalTemperature /> */}
+        <RecoilBridge>
+          {introPage ? <Intro /> : null}
+          {globalTem ? <GlobalTemperature /> : null}
+          {/* <GlobalTemperature /> */}
+        </RecoilBridge>
       </Scroll>
     </>
   );
