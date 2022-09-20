@@ -23,7 +23,7 @@ import Intro from "../main/Intro";
 import gsap from "gsap";
 import Spinner from "../main/Spinner";
 import GlobalTemperature from "../main/GlobalTemperature";
-import urls from "../../apis/urls";
+
 import { co2Images, MainData } from "../../atoms";
 import { useRecoilValue } from "recoil";
 
@@ -36,7 +36,6 @@ function Earth(props) {
   //   [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
   // );
   // Recoil Data 불러오기
-  const co2ImageData = useRecoilValue(co2Images);
 
   const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
     EarthDayMap,
@@ -45,7 +44,6 @@ function Earth(props) {
     EarthCloudsMap,
   ]);
 
-  const [co2Texture] = useTexture([CO2001]);
   // const co2Texture = [];
   // for (let i = 0; i++; i < co2ImageData.length) {
   //   co2Texture.push(useTexture(co2ImageData[i]));
@@ -131,7 +129,7 @@ function Earth(props) {
 
     // 지구 회전
 
-    cloud.current.rotation.y -= delta / 50;
+    cloud.current.rotation.y -= delta / 20;
 
     if (rotate) {
       earth.current.rotation.y += delta / 8;
@@ -267,8 +265,8 @@ function Earth(props) {
           <sphereGeometry args={[1.005, 32, 16]} />
           <meshPhongMaterial
             map={cloudsMap}
-            opacity={0}
-            depthWrite={true}
+            opacity={0.6}
+            // depthWrite={true}
             transparent={true}
             side={THREE.DoubleSide}
           />
@@ -277,8 +275,7 @@ function Earth(props) {
           <sphereGeometry args={[1, 32, 16]} />
           <meshPhongMaterial specularMap={specularMap} />
           <meshStandardMaterial
-            // map={colorMap}
-            map={co2Texture}
+            map={colorMap}
             normalMap={normalMap}
             metalness={0.4}
             roughness={0.7}
