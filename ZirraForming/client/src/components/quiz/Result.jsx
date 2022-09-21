@@ -5,6 +5,7 @@ import { HomeButton } from "../../items/goHome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
+import Share from "../common/Share";
 
 const Wrapper = styled(motion.div)`
 	position: relative;
@@ -95,7 +96,7 @@ function Result() {
 						margin: "3vh 0px 3vh 0px",
 					}}
 				>
-					이 결과 공유하기
+					<Share />
 				</div>
 
 				<BasicButton
