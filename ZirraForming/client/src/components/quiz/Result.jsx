@@ -4,6 +4,7 @@ import { BasicButton } from "../../items/quizButton";
 import { HomeButton } from "../../items/goHome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 
 const Wrapper = styled(motion.div)`
 	position: relative;
@@ -58,7 +59,8 @@ const Note = styled(motion.div)`
 
 function Result() {
 	const navigate = useNavigate();
-
+	const { state } = useLocation();
+	console.log(state);
 	const [start, setStart] = useState(true);
 	return (
 		<>
@@ -83,7 +85,7 @@ function Result() {
 						margin: "7vh 0px 0px 0px",
 					}}
 				>
-					<p style={{ color: "red" }}>7</p>/10
+					<p style={{ color: "red" }}>{state}</p>/10
 				</div>
 				<div
 					style={{

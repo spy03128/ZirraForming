@@ -19,6 +19,9 @@ const Wrapper = styled(motion.div)`
 		font-size: 100;
 		color: black;
 	}
+	h3 {
+		color: black;
+	}
 	@media screen and (${(props) => props.theme.tablet}) {
 		width: 70vw;
 		height: 700px;
@@ -38,8 +41,8 @@ function Quiz() {
 			option: [
 				"3월 18일 재활용의 날",
 				"4월 22일 지구의 날",
-				"6월 05일 플라스틱 없는 날 ",
-				"7월 03일 세계 일회용 비닐봉투 없는 날",
+				"6월 5일 플라스틱 없는 날 ",
+				"7월 3일 세계 일회용 비닐봉투 없는 날",
 			],
 			answer: 2,
 			solution:
@@ -139,7 +142,8 @@ function Quiz() {
 					}}
 					alt=""
 				/>
-				<h2>{quizData[index].question}</h2>
+				<h3 style={{ marginBottom: "20px" }}>{index + 1}/10</h3>
+				<h2 style={{ marginBottom: "20px" }}>{quizData[index].question}</h2>
 
 				{quizData[index].option.map((option, idx) => {
 					return (
@@ -150,10 +154,13 @@ function Quiz() {
 								setIndex(index + 1);
 								if (idx === quizData[index].answer) {
 									plusScore();
-								}
-								if (index + 1 === 10) {
-									console.log(score);
-									navigate("./result");
+									if (index + 1 === 10) {
+										navigate("./result", { state: score + 1 });
+									}
+								} else {
+									if (index + 1 === 10) {
+										navigate("./result", { state: score });
+									}
 								}
 							}}
 						>
