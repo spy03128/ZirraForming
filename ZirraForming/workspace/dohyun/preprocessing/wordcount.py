@@ -32,4 +32,4 @@ rdd = read_text_file(spark, "wordcount-data")
 map_result = map_phaze(rdd)
 reduce_result = reduce_phaze(map_result)
 
-print(reduce_result.collect())
+reduce_result.saveAsTextFile(f'hdfs://cluster:8020/user/j7d107/output/wordcount-result')
