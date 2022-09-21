@@ -62,7 +62,6 @@ function Result() {
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	console.log(state);
-	const [start, setStart] = useState(true);
 	return (
 		<>
 			<Wrapper>
@@ -92,7 +91,7 @@ function Result() {
 					style={{
 						width: "80%",
 						height: "120px",
-						backgroundColor: "#3c9f58",
+						backgroundColor: "#ffffff",
 						margin: "3vh 0px 3vh 0px",
 					}}
 				>
