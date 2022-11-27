@@ -1,4 +1,5 @@
 # 서비스 소개
+<img width="375" alt="지라포밍 배경제거" src="https://user-images.githubusercontent.com/57143818/204137557-8e276a0d-7298-4df6-86f8-e826ed70043f.png">
 
 ## 1. 서비스 설명
 
